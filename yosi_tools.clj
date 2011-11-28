@@ -263,32 +263,54 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; triangle, pentagonal, hexagonal
+;; triangle, pentagonal, hexagonal, and so on.
+;; 3
 (defn triangle-num [n]
   (/ (* n (+ 1 n)) 2))
 
 (defn triangle-num? [n]
-  (zero? (rem (- (sqrt (+ (* 8 n) 1)) 1) 2)))
+  (zero? (rem (- (Math/sqrt (+ (* 8 n) 1)) 1) 2)))
 
+;; 4
+(defn square-num [n]
+  (* n n))
+
+(defn square-num? [n]
+  (= (math/expt (int (Math/sqrt n)) 2) n))
+
+;; 5
 (defn pentagonal [n]
   (/ (* n (- (* 3 n) 1)) 2))
 
 (defn pentagonal? [n]
-  (zero? (rem (+ 1 (sqrt (+ 1 (* 24 n)))) 6)))
+  (zero? (rem (+ 1 (Math/sqrt (+ 1 (* 24 n)))) 6)))
 
+;; 6
 (defn hexagonal [n]
   (* n (- (* 2 n) 1)))
 
 (defn hexagonal? [n]
-  (zero? (rem (+ 1 (sqrt (+ 1 (* 8 n)))) 4)))
+  (zero? (rem (+ 1 (Math/sqrt (+ 1 (* 8 n)))) 4)))
+
+;; 7
+(defn heptagonal [n]
+  (/ (* n (- (* 5 n) 3)) 2))
+
+(defn heptagonal? [n]
+  (zero? (rem (+ 3 (Math/sqrt (+ 9 (* 40 n)))) 10)))
+
+;; 8
+(defn octagonal [n]
+  (* n (- (* 3 n) 2)))
+
+(defn octagonal? [n]
+  (zero? (rem (+ 1 (Math/sqrt (+ 1 (* 3 n)))) 3)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; list <-> num
-(use 'clojure.contrib.math)
-
 (defn list-to-num [digit-list]
-  (apply + (map #(* %1 (expt 10 %2)) (reverse digit-list) (iterate inc 0))))
+  (apply + (map #(* %1 %2) (reverse digit-list) (iterate #(* 10 %) 1))))
 
 (defn num-to-list [num]
   (map #(Character/digit % 10) (str num)))
